@@ -40,7 +40,7 @@ import PoolFinder from './PoolFinder'
 import RemoveLiquidity from './RemoveLiquidity'
 import RemoveLiquidityV3 from './RemoveLiquidity/V3'
 import Swap from './Swap'
-import { OpenClaimAddressModalAndRedirectToSwap, RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
+import { RedirectPathToSwapOnly, RedirectToSwap } from './Swap/redirects'
 import Tokens from './Tokens'
 
 const TokenDetails = lazy(() => import('./TokenDetails'))
@@ -209,7 +209,6 @@ export default function App() {
                     }
                   />
                   <Route path="create-proposal" element={<Navigate to="/vote/create-proposal" replace />} />
-                  <Route path="claim" element={<OpenClaimAddressModalAndRedirectToSwap />} />
                   <Route path="uni" element={<Earn />} />
                   <Route path="uni/:currencyIdA/:currencyIdB" element={<Manage />} />
 

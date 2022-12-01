@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { sendAnalyticsEvent } from '@uniswap/analytics'
-import { EventName } from '@uniswap/analytics-events'
+import { InterfaceEventName } from '@uniswap/analytics-events'
 import { formatNumber, formatUSDPrice, NumberType } from '@uniswap/conedison/format'
 import { ParentSize } from '@visx/responsive'
 import SparklineChart from 'components/Charts/SparklineChart'
@@ -59,22 +59,22 @@ const StyledTokenRow = styled.div<{
   padding-left: 12px;
   padding-right: 12px;
   transition: ${({
-    theme: {
-      transition: { duration, timing },
-    },
-  }) => css`background-color ${duration.medium} ${timing.ease}`};
+  theme: {
+    transition: { duration, timing },
+  },
+}) => css`background-color ${duration.medium} ${timing.ease}`};
   width: 100%;
   transition-duration: ${({ theme }) => theme.transition.duration.fast};
 
   &:hover {
     ${({ loading, theme }) =>
-      !loading &&
-      css`
+    !loading &&
+    css`
         background-color: ${theme.hoverDefault};
       `}
     ${({ last }) =>
-      last &&
-      css`
+    last &&
+    css`
         border-radius: 0px 0px 8px 8px;
       `}
   }
@@ -134,7 +134,7 @@ const StyledHeaderRow = styled(StyledTokenRow)`
   }
 `
 
-const ListNumberCell = styled(Cell)<{ header: boolean }>`
+const ListNumberCell = styled(Cell) <{ header: boolean }>`
   color: ${({ theme }) => theme.textSecondary};
   min-width: 32px;
   font-size: 14px;
@@ -143,15 +143,15 @@ const ListNumberCell = styled(Cell)<{ header: boolean }>`
     display: none;
   }
 `
-const DataCell = styled(Cell)<{ sortable: boolean }>`
+const DataCell = styled(Cell) <{ sortable: boolean }>`
   justify-content: flex-end;
   min-width: 80px;
   user-select: ${({ sortable }) => (sortable ? 'none' : 'unset')};
   transition: ${({
-    theme: {
-      transition: { duration, timing },
-    },
-  }) => css`background-color ${duration.medium} ${timing.ease}`};
+  theme: {
+    transition: { duration, timing },
+  },
+}) => css`background-color ${duration.medium} ${timing.ease}`};
 `
 const TvlCell = styled(DataCell)`
   padding-right: 8px;
@@ -460,7 +460,7 @@ export const LoadedRow = forwardRef((props: LoadedRowProps, ref: ForwardedRef<HT
     <div ref={ref}>
       <StyledLink
         to={getTokenDetailsURL(token.address, token.chain)}
-        onClick={() => sendAnalyticsEvent(EventName.EXPLORE_TOKEN_ROW_CLICKED, exploreTokenSelectedEventProperties)}
+        onClick={() => sendAnalyticsEvent(InterfaceEventName.EXPLORE_TOKEN_ROW_CLICKED, exploreTokenSelectedEventProperties)}
       >
         <TokenRow
           header={false}

@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { useTrace } from '@uniswap/analytics'
-import { NavBarSearchTypes, SectionName } from '@uniswap/analytics-events'
+import { NavBarSearchTypes, InterfaceSectionName } from '@uniswap/analytics-events'
 import { NftVariant, useNftFlag } from 'featureFlags/flags/nft'
 import { useIsNftPage } from 'hooks/useIsNftPage'
 import { Box } from 'nft/components/Box'
@@ -129,17 +129,17 @@ export const SearchBarDropdown = ({
     () =>
       trendingCollectionResults
         ? trendingCollectionResults
-            .map((collection) => ({
-              ...collection,
-              collectionAddress: collection.address,
-              floorPrice: formatEthPrice(collection.floor?.toString()),
-              stats: {
-                total_supply: collection.totalSupply,
-                one_day_change: collection.floorChange,
-                floor_price: formatEthPrice(collection.floor?.toString()),
-              },
-            }))
-            .slice(0, isNFTPage ? 3 : 2)
+          .map((collection) => ({
+            ...collection,
+            collectionAddress: collection.address,
+            floorPrice: formatEthPrice(collection.floor?.toString()),
+            stats: {
+              total_supply: collection.totalSupply,
+              one_day_change: collection.floorChange,
+              floor_price: formatEthPrice(collection.floor?.toString()),
+            },
+          }))
+          .slice(0, isNFTPage ? 3 : 2)
         : [...Array<GenieCollection>(isNFTPage ? 3 : 2)],
     [isNFTPage, trendingCollectionResults]
   )
@@ -169,8 +169,8 @@ export const SearchBarDropdown = ({
   const totalSuggestions = hasInput
     ? tokens.length + collections.length
     : Math.min(shortenedHistory.length, 2) +
-      (isNFTPage || !isTokenPage ? trendingCollections?.length ?? 0 : 0) +
-      (isTokenPage || !isNFTPage ? trendingTokens?.length ?? 0 : 0)
+    (isNFTPage || !isTokenPage ? trendingCollections?.length ?? 0 : 0) +
+    (isTokenPage || !isNFTPage ? trendingTokens?.length ?? 0 : 0)
 
   // Navigate search results via arrow keys
   useEffect(() => {
@@ -205,7 +205,7 @@ export const SearchBarDropdown = ({
     (isNFTPage && (hasVerifiedCollection || !hasVerifiedToken)) ||
     (!isNFTPage && !hasVerifiedToken && hasVerifiedCollection)
 
-  const trace = JSON.stringify(useTrace({ section: SectionName.NAVBAR_SEARCH }))
+  const trace = JSON.stringify(useTrace({ section: InterfaceSectionName.NAVBAR_SEARCH }))
 
   useEffect(() => {
     const eventProperties = { total_suggestions: totalSuggestions, query_text: queryText, ...JSON.parse(trace) }

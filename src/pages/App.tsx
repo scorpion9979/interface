@@ -1,5 +1,5 @@
 import { initializeAnalytics, OriginApplication, sendAnalyticsEvent, Trace, user } from '@uniswap/analytics'
-import { CustomUserProperties, EventName, getBrowser, PageName } from '@uniswap/analytics-events'
+import { CustomUserProperties, InterfaceEventName, getBrowser, InterfacePageName, BasicEventName } from '@uniswap/analytics-events'
 import Loader from 'components/Loader'
 import TopLevelModals from 'components/TopLevelModals'
 import { useFeatureFlagsIsLoaded } from 'featureFlags'
@@ -56,7 +56,7 @@ const ANALYTICS_PROXY_URL = process.env.REACT_APP_AMPLITUDE_PROXY_URL
 const COMMIT_HASH = process.env.REACT_APP_GIT_COMMIT_HASH
 initializeAnalytics(ANALYTICS_DUMMY_KEY, OriginApplication.INTERFACE, {
   proxyUrl: ANALYTICS_PROXY_URL,
-  defaultEventName: EventName.PAGE_VIEWED,
+  defaultEventName: BasicEventName.PAGE_VIEWED,
   commitHash: COMMIT_HASH,
   isProductionEnv: isProductionEnv(),
 })
@@ -94,24 +94,24 @@ const Marginer = styled.div`
   margin-top: 5rem;
 `
 
-function getCurrentPageFromLocation(locationPathname: string): PageName | undefined {
+function getCurrentPageFromLocation(locationPathname: string): InterfacePageName | undefined {
   switch (true) {
     case locationPathname.startsWith('/swap'):
-      return PageName.SWAP_PAGE
+      return InterfacePageName.SWAP_PAGE
     case locationPathname.startsWith('/vote'):
-      return PageName.VOTE_PAGE
+      return InterfacePageName.VOTE_PAGE
     case locationPathname.startsWith('/pool'):
-      return PageName.POOL_PAGE
+      return InterfacePageName.POOL_PAGE
     case locationPathname.startsWith('/tokens'):
-      return PageName.TOKENS_PAGE
+      return InterfacePageName.TOKENS_PAGE
     case locationPathname.startsWith('/nfts/profile'):
-      return PageName.NFT_PROFILE_PAGE
+      return InterfacePageName.NFT_PROFILE_PAGE
     case locationPathname.startsWith('/nfts/asset'):
-      return PageName.NFT_DETAILS_PAGE
+      return InterfacePageName.NFT_DETAILS_PAGE
     case locationPathname.startsWith('/nfts/collection'):
-      return PageName.NFT_COLLECTION_PAGE
+      return InterfacePageName.NFT_COLLECTION_PAGE
     case locationPathname.startsWith('/nfts'):
-      return PageName.NFT_EXPLORE_PAGE
+      return InterfacePageName.NFT_EXPLORE_PAGE
     default:
       return undefined
   }
@@ -149,15 +149,15 @@ export default function App() {
   }, [pathname])
 
   useEffect(() => {
-    sendAnalyticsEvent(EventName.APP_LOADED)
+    sendAnalyticsEvent(BasicEventName.APP_LOADED)
     user.set(CustomUserProperties.USER_AGENT, navigator.userAgent)
     user.set(CustomUserProperties.BROWSER, getBrowser())
     user.set(CustomUserProperties.SCREEN_RESOLUTION_HEIGHT, window.screen.height)
     user.set(CustomUserProperties.SCREEN_RESOLUTION_WIDTH, window.screen.width)
-    getCLS(({ delta }: Metric) => sendAnalyticsEvent(EventName.WEB_VITALS, { cumulative_layout_shift: delta }))
-    getFCP(({ delta }: Metric) => sendAnalyticsEvent(EventName.WEB_VITALS, { first_contentful_paint_ms: delta }))
-    getFID(({ delta }: Metric) => sendAnalyticsEvent(EventName.WEB_VITALS, { first_input_delay_ms: delta }))
-    getLCP(({ delta }: Metric) => sendAnalyticsEvent(EventName.WEB_VITALS, { largest_contentful_paint_ms: delta }))
+    getCLS(({ delta }: Metric) => sendAnalyticsEvent(BasicEventName.WEB_VITALS, { cumulative_layout_shift: delta }))
+    getFCP(({ delta }: Metric) => sendAnalyticsEvent(BasicEventName.WEB_VITALS, { first_contentful_paint_ms: delta }))
+    getFID(({ delta }: Metric) => sendAnalyticsEvent(BasicEventName.WEB_VITALS, { first_input_delay_ms: delta }))
+    getLCP(({ delta }: Metric) => sendAnalyticsEvent(BasicEventName.WEB_VITALS, { largest_contentful_paint_ms: delta }))
   }, [])
 
   useEffect(() => {

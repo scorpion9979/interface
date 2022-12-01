@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { sendAnalyticsEvent } from '@uniswap/analytics'
-import { EventName } from '@uniswap/analytics-events'
+import { InterfaceEventName } from '@uniswap/analytics-events'
 import { Currency } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
 import useNativeCurrency from 'lib/hooks/useNativeCurrency'
@@ -98,41 +98,41 @@ export default function useWrapCallback(
         execute:
           sufficientBalance && inputAmount
             ? async () => {
-                try {
-                  const network = await wethContract.provider.getNetwork()
-                  if (
-                    network.chainId !== chainId ||
-                    wethContract.address !== WRAPPED_NATIVE_CURRENCY[network.chainId]?.address
-                  ) {
-                    sendAnalyticsEvent(EventName.WRAP_TOKEN_TXN_INVALIDATED, {
-                      ...eventProperties,
-                      contract_address: wethContract.address,
-                      contract_chain_id: network.chainId,
-                      type: WrapType.WRAP,
-                    })
-                    const error = new Error(`Invalid WETH contract
-Please file a bug detailing how this happened - https://github.com/Uniswap/interface/issues/new?labels=bug&template=bug-report.md&title=Invalid%20WETH%20contract`)
-                    setError(error)
-                    throw error
-                  }
-                  const txReceipt = await wethContract.deposit({ value: `0x${inputAmount.quotient.toString(16)}` })
-                  addTransaction(txReceipt, {
-                    type: TransactionType.WRAP,
-                    unwrapped: false,
-                    currencyAmountRaw: inputAmount?.quotient.toString(),
-                    chainId,
+              try {
+                const network = await wethContract.provider.getNetwork()
+                if (
+                  network.chainId !== chainId ||
+                  wethContract.address !== WRAPPED_NATIVE_CURRENCY[network.chainId]?.address
+                ) {
+                  sendAnalyticsEvent(InterfaceEventName.WRAP_TOKEN_TXN_INVALIDATED, {
+                    ...eventProperties,
+                    contract_address: wethContract.address,
+                    contract_chain_id: network.chainId,
+                    type: WrapType.WRAP,
                   })
-                  sendAnalyticsEvent(EventName.WRAP_TOKEN_TXN_SUBMITTED, { ...eventProperties, type: WrapType.WRAP })
-                } catch (error) {
-                  console.error('Could not deposit', error)
+                  const error = new Error(`Invalid WETH contract
+Please file a bug detailing how this happened - https://github.com/Uniswap/interface/issues/new?labels=bug&template=bug-report.md&title=Invalid%20WETH%20contract`)
+                  setError(error)
+                  throw error
                 }
+                const txReceipt = await wethContract.deposit({ value: `0x${inputAmount.quotient.toString(16)}` })
+                addTransaction(txReceipt, {
+                  type: TransactionType.WRAP,
+                  unwrapped: false,
+                  currencyAmountRaw: inputAmount?.quotient.toString(),
+                  chainId,
+                })
+                sendAnalyticsEvent(InterfaceEventName.WRAP_TOKEN_TXN_SUBMITTED, { ...eventProperties, type: WrapType.WRAP })
+              } catch (error) {
+                console.error('Could not deposit', error)
               }
+            }
             : undefined,
         inputError: sufficientBalance
           ? undefined
           : hasInputAmount
-          ? WrapInputError.INSUFFICIENT_NATIVE_BALANCE
-          : WrapInputError.ENTER_NATIVE_AMOUNT,
+            ? WrapInputError.INSUFFICIENT_NATIVE_BALANCE
+            : WrapInputError.ENTER_NATIVE_AMOUNT,
       }
     } else if (weth.equals(inputCurrency) && outputCurrency.isNative) {
       return {
@@ -140,25 +140,25 @@ Please file a bug detailing how this happened - https://github.com/Uniswap/inter
         execute:
           sufficientBalance && inputAmount
             ? async () => {
-                try {
-                  const txReceipt = await wethContract.withdraw(`0x${inputAmount.quotient.toString(16)}`)
-                  addTransaction(txReceipt, {
-                    type: TransactionType.WRAP,
-                    unwrapped: true,
-                    currencyAmountRaw: inputAmount?.quotient.toString(),
-                    chainId,
-                  })
-                  sendAnalyticsEvent(EventName.WRAP_TOKEN_TXN_SUBMITTED, { ...eventProperties, type: WrapType.UNWRAP })
-                } catch (error) {
-                  console.error('Could not withdraw', error)
-                }
+              try {
+                const txReceipt = await wethContract.withdraw(`0x${inputAmount.quotient.toString(16)}`)
+                addTransaction(txReceipt, {
+                  type: TransactionType.WRAP,
+                  unwrapped: true,
+                  currencyAmountRaw: inputAmount?.quotient.toString(),
+                  chainId,
+                })
+                sendAnalyticsEvent(InterfaceEventName.WRAP_TOKEN_TXN_SUBMITTED, { ...eventProperties, type: WrapType.UNWRAP })
+              } catch (error) {
+                console.error('Could not withdraw', error)
               }
+            }
             : undefined,
         inputError: sufficientBalance
           ? undefined
           : hasInputAmount
-          ? WrapInputError.INSUFFICIENT_WRAPPED_BALANCE
-          : WrapInputError.ENTER_WRAPPED_AMOUNT,
+            ? WrapInputError.INSUFFICIENT_WRAPPED_BALANCE
+            : WrapInputError.ENTER_WRAPPED_AMOUNT,
       }
     } else {
       return NOT_APPLICABLE

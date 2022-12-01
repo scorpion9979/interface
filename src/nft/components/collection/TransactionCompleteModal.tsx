@@ -1,6 +1,6 @@
 import { formatEther } from '@ethersproject/units'
 import { Trace, useTrace } from '@uniswap/analytics'
-import { EventName, ModalName } from '@uniswap/analytics-events'
+import { NFTEventName, InterfaceModalName } from '@uniswap/analytics-events'
 import clsx from 'clsx'
 import { OpacityHoverState } from 'components/Common'
 import { Box } from 'nft/components/Box'
@@ -58,7 +58,7 @@ const TxCompleteModal = () => {
   const isMobile = useIsMobile()
   const txHashUrl = getExplorerLink(1, txHash, ExplorerDataType.TRANSACTION)
   const shouldShowModal = (txState === TxStateType.Success || txState === TxStateType.Failed) && txState
-  const trace = useTrace({ modal: ModalName.NFT_TX_COMPLETE })
+  const trace = useTrace({ modal: InterfaceModalName.NFT_TX_COMPLETE })
   const {
     nftsPurchased,
     nftsNotPurchased,
@@ -95,8 +95,7 @@ const TxCompleteModal = () => {
     window.open(
       generateTweetForPurchase(nftsPurchased, txHashUrl),
       'newwindow',
-      `left=${(window.screen.width - TWITTER_WIDTH) / 2}, top=${
-        (window.screen.height - TWITTER_HEIGHT) / 2
+      `left=${(window.screen.width - TWITTER_WIDTH) / 2}, top=${(window.screen.height - TWITTER_HEIGHT) / 2
       }, width=${TWITTER_WIDTH}, height=${TWITTER_HEIGHT}`
     )
   }
@@ -110,7 +109,7 @@ const TxCompleteModal = () => {
             {/* Successfully purchased NFTs */}
             {showPurchasedModal && (
               <Trace
-                name={EventName.NFT_BUY_BAG_SUCCEEDED}
+                name={NFTEventName.NFT_BUY_BAG_SUCCEEDED}
                 properties={{
                   buy_quantity: nftsPurchased.length,
                   usd_value: parseFloat(formatEther(totalPurchaseValue)) * ethPrice,
@@ -185,7 +184,7 @@ const TxCompleteModal = () => {
               /* Showing both purchases & refunds */
               (showPurchasedModal ? (
                 <Trace
-                  name={EventName.NFT_BUY_BAG_REFUNDED}
+                  name={NFTEventName.NFT_BUY_BAG_REFUNDED}
                   properties={{
                     buy_quantity: nftsPurchased.length,
                     fail_quantity: nftsNotPurchased.length,
@@ -262,7 +261,7 @@ const TxCompleteModal = () => {
               ) : (
                 // Only showing when all assets are unavailable
                 <Trace
-                  name={EventName.NFT_BUY_BAG_REFUNDED}
+                  name={NFTEventName.NFT_BUY_BAG_REFUNDED}
                   properties={{
                     buy_quantity: 0,
                     fail_quantity: nftsNotPurchased.length,
@@ -284,8 +283,7 @@ const TxCompleteModal = () => {
                     </Box>
                     <p className={styles.bodySmall}>
                       {txState === TxStateType.Success &&
-                        `Selected item${
-                          nftsPurchased.length === 1 ? ' is' : 's are'
+                        `Selected item${nftsPurchased.length === 1 ? ' is' : 's are'
                         } no longer available. Uniswap instantly refunded you for this incomplete transaction. `}
                       {formatUsdPrice(txFeeFiat)} was used for gas in attempt to complete this transaction. For support,
                       please visit our <a href="https://discord.gg/FCfyBSbCU5">Discord</a>

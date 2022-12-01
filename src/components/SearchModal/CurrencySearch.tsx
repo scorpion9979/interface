@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-restricted-imports
 import { t, Trans } from '@lingui/macro'
 import { Trace } from '@uniswap/analytics'
-import { EventName, ModalName } from '@uniswap/analytics-events'
+import { InterfaceEventName, InterfaceModalName } from '@uniswap/analytics-events'
 import { Currency, Token } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
 import { sendEvent } from 'components/analytics'
@@ -91,15 +91,15 @@ export function CurrencySearch({
     () =>
       !balancesAreLoading
         ? filteredTokens
-            .filter((token) => {
-              // If there is no query, filter out unselected user-added tokens with no balance.
-              if (!debouncedQuery && token instanceof UserAddedToken) {
-                if (selectedCurrency?.equals(token) || otherSelectedCurrency?.equals(token)) return true
-                return balances[token.address]?.greaterThan(0)
-              }
-              return true
-            })
-            .sort(tokenComparator.bind(null, balances))
+          .filter((token) => {
+            // If there is no query, filter out unselected user-added tokens with no balance.
+            if (!debouncedQuery && token instanceof UserAddedToken) {
+              if (selectedCurrency?.equals(token) || otherSelectedCurrency?.equals(token)) return true
+              return balances[token.address]?.greaterThan(0)
+            }
+            return true
+          })
+          .sort(tokenComparator.bind(null, balances))
         : [],
     [balances, balancesAreLoading, debouncedQuery, filteredTokens, otherSelectedCurrency, selectedCurrency]
   )
@@ -181,7 +181,7 @@ export function CurrencySearch({
 
   return (
     <ContentWrapper>
-      <Trace name={EventName.TOKEN_SELECTOR_OPENED} modal={ModalName.TOKEN_SELECTOR} shouldLogImpression>
+      <Trace name={InterfaceEventName.TOKEN_SELECTOR_OPENED} modal={InterfaceModalName.TOKEN_SELECTOR} shouldLogImpression>
         <PaddedColumn gap="16px">
           <RowBetween>
             <Text fontWeight={500} fontSize={16}>

@@ -2,7 +2,7 @@ import { defaultAbiCoder } from '@ethersproject/abi'
 import { getAddress, isAddress } from '@ethersproject/address'
 import { Trans } from '@lingui/macro'
 import { Trace } from '@uniswap/analytics'
-import { PageName } from '@uniswap/analytics-events'
+import { InterfacePageName } from '@uniswap/analytics-events'
 import { Currency, CurrencyAmount, Token } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
 import { ButtonError } from 'components/Button'
@@ -60,9 +60,9 @@ const CreateProposalButton = ({
 }) => {
   const formattedProposalThreshold = proposalThreshold
     ? JSBI.divide(
-        proposalThreshold.quotient,
-        JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(proposalThreshold.currency.decimals))
-      ).toLocaleString()
+      proposalThreshold.quotient,
+      JSBI.exponentiate(JSBI.BigInt(10), JSBI.BigInt(proposalThreshold.currency.decimals))
+    ).toLocaleString()
     : undefined
 
   return (
@@ -176,11 +176,11 @@ export default function CreateProposal() {
     () =>
       Boolean(
         !proposalAction ||
-          !isAddress(toAddressValue) ||
-          !currencyValue?.isToken ||
-          amountValue === '' ||
-          titleValue === '' ||
-          bodyValue === ''
+        !isAddress(toAddressValue) ||
+        !currencyValue?.isToken ||
+        amountValue === '' ||
+        titleValue === '' ||
+        bodyValue === ''
       ),
     [proposalAction, toAddressValue, currencyValue, amountValue, titleValue, bodyValue]
   )
@@ -239,7 +239,7 @@ ${bodyValue}
   }
 
   return (
-    <Trace page={PageName.VOTE_PAGE} shouldLogImpression>
+    <Trace page={InterfacePageName.VOTE_PAGE} shouldLogImpression>
       <PageWrapper>
         <AppBody {...{ maxWidth: '800px' }}>
           <CreateProposalTabs />

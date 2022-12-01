@@ -1,5 +1,5 @@
 import { Trace } from '@uniswap/analytics'
-import { PageName } from '@uniswap/analytics-events'
+import { InterfacePageName } from '@uniswap/analytics-events'
 import { useWeb3React } from '@web3-react/core'
 import { OpacityHoverState } from 'components/Common'
 import { useLoadAssetsQuery } from 'graphql/data/nft/Asset'
@@ -85,8 +85,8 @@ const Collection = () => {
           ? BAG_WIDTH + FILTER_WIDTH
           : FILTER_WIDTH
         : isBagExpanded && !isMobile
-        ? BAG_WIDTH
-        : 0,
+          ? BAG_WIDTH
+          : 0,
     config: {
       duration: TRANSITION_DURATIONS.medium,
       easing: easings.easeOutSine,
@@ -115,7 +115,7 @@ const Collection = () => {
   return (
     <>
       <Trace
-        page={PageName.NFT_COLLECTION_PAGE}
+        page={InterfacePageName.NFT_COLLECTION_PAGE}
         properties={{ collection_address: contractAddress, chain_id: chainId, is_activity_view: isActivityToggled }}
         shouldLogImpression
       >
@@ -185,23 +185,23 @@ const Collection = () => {
                 >
                   {isActivityToggled
                     ? contractAddress && (
-                        <Activity
-                          contractAddress={contractAddress}
-                          rarityVerified={collectionStats?.rarityVerified ?? false}
-                          collectionName={collectionStats?.name ?? ''}
-                          chainId={chainId}
-                        />
-                      )
+                      <Activity
+                        contractAddress={contractAddress}
+                        rarityVerified={collectionStats?.rarityVerified ?? false}
+                        collectionName={collectionStats?.name ?? ''}
+                        chainId={chainId}
+                      />
+                    )
                     : contractAddress &&
-                      collectionStats && (
-                        <Suspense fallback={<CollectionNftsAndMenuLoading />}>
-                          <CollectionNfts
-                            collectionStats={collectionStats || ({} as GenieCollection)}
-                            contractAddress={contractAddress}
-                            rarityVerified={collectionStats?.rarityVerified}
-                          />
-                        </Suspense>
-                      )}
+                    collectionStats && (
+                      <Suspense fallback={<CollectionNftsAndMenuLoading />}>
+                        <CollectionNfts
+                          collectionStats={collectionStats || ({} as GenieCollection)}
+                          contractAddress={contractAddress}
+                          rarityVerified={collectionStats?.rarityVerified}
+                        />
+                      </Suspense>
+                    )}
                 </AnimatedBox>
               </CollectionDisplaySection>
             </>

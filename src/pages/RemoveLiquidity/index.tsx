@@ -3,7 +3,7 @@ import { Contract } from '@ethersproject/contracts'
 import type { TransactionResponse } from '@ethersproject/providers'
 import { Trans } from '@lingui/macro'
 import { TraceEvent } from '@uniswap/analytics'
-import { BrowserEvent, ElementName, EventName } from '@uniswap/analytics-events'
+import { BrowserEvent, InterfaceElementName, InterfaceEventName } from '@uniswap/analytics-events'
 import { Currency, Percent } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
 import { sendEvent } from 'components/analytics'
@@ -79,8 +79,8 @@ export default function RemoveLiquidity() {
     [Field.LIQUIDITY_PERCENT]: parsedAmounts[Field.LIQUIDITY_PERCENT].equalTo('0')
       ? '0'
       : parsedAmounts[Field.LIQUIDITY_PERCENT].lessThan(new Percent('1', '100'))
-      ? '<1'
-      : parsedAmounts[Field.LIQUIDITY_PERCENT].toFixed(0),
+        ? '<1'
+        : parsedAmounts[Field.LIQUIDITY_PERCENT].toFixed(0),
     [Field.LIQUIDITY]:
       independentField === Field.LIQUIDITY ? typedValue : parsedAmounts[Field.LIQUIDITY]?.toSignificant(6) ?? '',
     [Field.CURRENCY_A]:
@@ -388,9 +388,9 @@ export default function RemoveLiquidity() {
 
   const oneCurrencyIsWETH = Boolean(
     chainId &&
-      WRAPPED_NATIVE_CURRENCY[chainId] &&
-      ((currencyA && WRAPPED_NATIVE_CURRENCY[chainId]?.equals(currencyA)) ||
-        (currencyB && WRAPPED_NATIVE_CURRENCY[chainId]?.equals(currencyB)))
+    WRAPPED_NATIVE_CURRENCY[chainId] &&
+    ((currencyA && WRAPPED_NATIVE_CURRENCY[chainId]?.equals(currencyA)) ||
+      (currencyB && WRAPPED_NATIVE_CURRENCY[chainId]?.equals(currencyB)))
   )
 
   const handleSelectCurrencyA = useCallback(
@@ -533,25 +533,21 @@ export default function RemoveLiquidity() {
                       <RowBetween style={{ justifyContent: 'flex-end' }}>
                         {oneCurrencyIsETH ? (
                           <StyledInternalLink
-                            to={`/remove/v2/${
-                              currencyA?.isNative && chainId && WRAPPED_NATIVE_CURRENCY[chainId]
-                                ? WRAPPED_NATIVE_CURRENCY[chainId]?.address
-                                : currencyIdA
-                            }/${
-                              currencyB?.isNative && chainId && WRAPPED_NATIVE_CURRENCY[chainId]
+                            to={`/remove/v2/${currencyA?.isNative && chainId && WRAPPED_NATIVE_CURRENCY[chainId]
+                              ? WRAPPED_NATIVE_CURRENCY[chainId]?.address
+                              : currencyIdA
+                              }/${currencyB?.isNative && chainId && WRAPPED_NATIVE_CURRENCY[chainId]
                                 ? WRAPPED_NATIVE_CURRENCY[chainId]?.address
                                 : currencyIdB
-                            }`}
+                              }`}
                           >
                             Receive WETH
                           </StyledInternalLink>
                         ) : oneCurrencyIsWETH ? (
                           <StyledInternalLink
-                            to={`/remove/v2/${
-                              currencyA && WRAPPED_NATIVE_CURRENCY[chainId]?.equals(currencyA) ? 'ETH' : currencyIdA
-                            }/${
-                              currencyB && WRAPPED_NATIVE_CURRENCY[chainId]?.equals(currencyB) ? 'ETH' : currencyIdB
-                            }`}
+                            to={`/remove/v2/${currencyA && WRAPPED_NATIVE_CURRENCY[chainId]?.equals(currencyA) ? 'ETH' : currencyIdA
+                              }/${currencyB && WRAPPED_NATIVE_CURRENCY[chainId]?.equals(currencyB) ? 'ETH' : currencyIdB
+                              }`}
                           >
                             Receive ETH
                           </StyledInternalLink>
@@ -626,9 +622,9 @@ export default function RemoveLiquidity() {
               {!account ? (
                 <TraceEvent
                   events={[BrowserEvent.onClick]}
-                  name={EventName.CONNECT_WALLET_BUTTON_CLICKED}
+                  name={InterfaceEventName.CONNECT_WALLET_BUTTON_CLICKED}
                   properties={{ received_swap_quote: false }}
-                  element={ElementName.CONNECT_WALLET_BUTTON}
+                  element={InterfaceElementName.CONNECT_WALLET_BUTTON}
                 >
                   <ButtonLight onClick={toggleWalletModal}>
                     <Trans>Connect Wallet</Trans>

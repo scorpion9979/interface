@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { TraceEvent } from '@uniswap/analytics'
-import { BrowserEvent, ElementName, EventName } from '@uniswap/analytics-events'
+import { BrowserEvent, InterfaceElementName, SwapEventName } from '@uniswap/analytics-events'
 import { Protocol } from '@uniswap/router-sdk'
 import { Currency, Percent, TradeType } from '@uniswap/sdk-core'
 import { Pair } from '@uniswap/v2-sdk'
@@ -22,14 +22,14 @@ import { Separator, ThemedText } from 'theme'
 
 import { AutoRouterLabel, AutoRouterLogo } from './RouterLabel'
 
-const Wrapper = styled(AutoColumn)<{ darkMode?: boolean; fixedOpen?: boolean }>`
+const Wrapper = styled(AutoColumn) <{ darkMode?: boolean; fixedOpen?: boolean }>`
   padding: ${({ fixedOpen }) => (fixedOpen ? '12px' : '12px 8px 12px 12px')};
   border-radius: 16px;
   border: 1px solid ${({ theme, fixedOpen }) => (fixedOpen ? 'transparent' : theme.backgroundOutline)};
   cursor: pointer;
 `
 
-const OpenCloseIcon = styled(Plus)<{ open?: boolean }>`
+const OpenCloseIcon = styled(Plus) <{ open?: boolean }>`
   margin-left: 8px;
   height: 20px;
   stroke-width: 2px;
@@ -66,8 +66,8 @@ export default memo(function SwapRoute({ trade, syncing, fixedOpen = false, ...r
     <Wrapper {...rest} darkMode={darkMode} fixedOpen={fixedOpen}>
       <TraceEvent
         events={[BrowserEvent.onClick]}
-        name={EventName.SWAP_AUTOROUTER_VISUALIZATION_EXPANDED}
-        element={ElementName.AUTOROUTER_VISUALIZATION_ROW}
+        name={SwapEventName.SWAP_AUTOROUTER_VISUALIZATION_EXPANDED}
+        element={InterfaceElementName.AUTOROUTER_VISUALIZATION_ROW}
         shouldLogImpression={!open}
       >
         <RowBetween onClick={() => setOpen(!open)}>

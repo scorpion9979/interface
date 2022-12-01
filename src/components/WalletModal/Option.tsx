@@ -1,5 +1,5 @@
 import { TraceEvent } from '@uniswap/analytics'
-import { BrowserEvent, ElementName, EventName } from '@uniswap/analytics-events'
+import { BrowserEvent, InterfaceElementName, InterfaceEventName } from '@uniswap/analytics-events'
 import React from 'react'
 import { Check } from 'react-feather'
 import styled from 'styled-components/macro'
@@ -47,7 +47,7 @@ const OptionCardLeft = styled.div`
   height: 100%;
 `
 
-const OptionCardClickable = styled(OptionCard as any)<{
+const OptionCardClickable = styled(OptionCard as any) <{
   active?: boolean
   clickable?: boolean
 }>`
@@ -117,9 +117,9 @@ export default function Option({
   const content = (
     <TraceEvent
       events={[BrowserEvent.onClick]}
-      name={EventName.WALLET_SELECTED}
+      name={InterfaceEventName.WALLET_SELECTED}
       properties={{ wallet_type: header }}
-      element={ElementName.WALLET_TYPE_OPTION}
+      element={InterfaceElementName.WALLET_TYPE_OPTION}
     >
       <OptionCardClickable
         id={id}

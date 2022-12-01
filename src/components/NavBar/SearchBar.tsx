@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-restricted-imports
 import { t } from '@lingui/macro'
 import { sendAnalyticsEvent, Trace, TraceEvent, useTrace } from '@uniswap/analytics'
-import { BrowserEvent, ElementName, EventName, SectionName } from '@uniswap/analytics-events'
+import { BrowserEvent, InterfaceElementName, InterfaceEventName, InterfaceSectionName } from '@uniswap/analytics-events'
 import clsx from 'clsx'
 import { NftVariant, useNftFlag } from 'featureFlags/flags/nft'
 import useDebounce from 'hooks/useDebounce'
@@ -114,7 +114,7 @@ export const SearchBar = () => {
   const showCenteredSearchContent =
     !isOpen && phase1Flag !== NftVariant.Enabled && !isMobileOrTablet && searchValue.length === 0
 
-  const trace = useTrace({ section: SectionName.NAVBAR_SEARCH })
+  const trace = useTrace({ section: InterfaceSectionName.NAVBAR_SEARCH })
 
   const navbarSearchEventProperties = {
     navbar_search_input_text: debouncedSearchValue,
@@ -155,7 +155,7 @@ export const SearchBar = () => {
   }, [handleKeyPress, inputRef])
 
   return (
-    <Trace section={SectionName.NAVBAR_SEARCH}>
+    <Trace section={InterfaceSectionName.NAVBAR_SEARCH}>
       <Box
         position={{ sm: 'fixed', md: 'absolute', xl: 'relative' }}
         width={{ sm: isOpen ? 'viewWidth' : 'auto', md: 'auto' }}
@@ -165,8 +165,7 @@ export const SearchBar = () => {
       >
         <Row
           className={clsx(
-            ` ${isPhase1 ? styles.nftSearchBar : styles.searchBar} ${!isOpen && !isMobile && magicalGradientOnHover} ${
-              isMobileOrTablet && (isOpen ? styles.visible : styles.hidden)
+            ` ${isPhase1 ? styles.nftSearchBar : styles.searchBar} ${!isOpen && !isMobile && magicalGradientOnHover} ${isMobileOrTablet && (isOpen ? styles.visible : styles.hidden)
             } `
           )}
           borderRadius={isOpen || isMobileOrTablet ? undefined : '12'}
@@ -187,8 +186,8 @@ export const SearchBar = () => {
           </Box>
           <TraceEvent
             events={[BrowserEvent.onFocus]}
-            name={EventName.NAVBAR_SEARCH_SELECTED}
-            element={ElementName.NAVBAR_SEARCH_INPUT}
+            name={InterfaceEventName.NAVBAR_SEARCH_SELECTED}
+            element={InterfaceElementName.NAVBAR_SEARCH_INPUT}
             properties={{ ...trace }}
           >
             <Box
@@ -198,10 +197,9 @@ export const SearchBar = () => {
                 !isOpen && toggleOpen()
                 setSearchValue(event.target.value)
               }}
-              onBlur={() => sendAnalyticsEvent(EventName.NAVBAR_SEARCH_EXITED, navbarSearchEventProperties)}
-              className={`${styles.searchBarInput} ${
-                showCenteredSearchContent ? styles.searchContentCentered : styles.searchContentLeftAlign
-              }`}
+              onBlur={() => sendAnalyticsEvent(InterfaceEventName.NAVBAR_SEARCH_EXITED, navbarSearchEventProperties)}
+              className={`${styles.searchBarInput} ${showCenteredSearchContent ? styles.searchContentCentered : styles.searchContentLeftAlign
+                }`}
               value={searchValue}
               ref={inputRef}
               width={phase1Flag === NftVariant.Enabled || isOpen ? 'full' : '160'}

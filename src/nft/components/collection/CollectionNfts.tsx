@@ -1,6 +1,6 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { TraceEvent } from '@uniswap/analytics'
-import { BrowserEvent, ElementName, EventName } from '@uniswap/analytics-events'
+import { BrowserEvent, InterfaceElementName, NFTEventName } from '@uniswap/analytics-events'
 import { useWeb3React } from '@web3-react/core'
 import clsx from 'clsx'
 import { OpacityHoverState } from 'components/Common'
@@ -147,10 +147,10 @@ const SweepButton = styled.div<{ toggled: boolean; disabled?: boolean }>`
   :hover {
     background-color: ${({ theme }) => theme.hoverState};
     transition: ${({
-      theme: {
-        transition: { duration, timing },
-      },
-    }) => `${duration.fast} background-color ${timing.in}`};
+        theme: {
+          transition: { duration, timing },
+        },
+      }) => `${duration.fast} background-color ${timing.in}`};
   }
 
   @media only screen and (max-width: ${({ theme }) => `${theme.breakpoint.md}px`}) {
@@ -218,19 +218,19 @@ export const getSortDropdownOptions = (setSortBy: (sortBy: SortBy) => void, hasR
   ]
   return hasRarity
     ? options.concat([
-        {
-          displayText: 'Rarity: Rare to Common',
-          onClick: () => setSortBy(SortBy.RareToCommon),
-          reverseIndex: 4,
-          sortBy: SortBy.RareToCommon,
-        },
-        {
-          displayText: 'Rarity: Common to Rare',
-          onClick: () => setSortBy(SortBy.CommonToRare),
-          reverseIndex: 3,
-          sortBy: SortBy.CommonToRare,
-        },
-      ])
+      {
+        displayText: 'Rarity: Rare to Common',
+        onClick: () => setSortBy(SortBy.RareToCommon),
+        reverseIndex: 4,
+        sortBy: SortBy.RareToCommon,
+      },
+      {
+        displayText: 'Rarity: Common to Rare',
+        onClick: () => setSortBy(SortBy.CommonToRare),
+        reverseIndex: 3,
+        sortBy: SortBy.CommonToRare,
+      },
+    ])
     : options
 }
 
@@ -292,8 +292,8 @@ export const CollectionNfts = ({ contractAddress, collectionStats, rarityVerifie
       traits:
         traits.length > 0
           ? traits.map((trait) => {
-              return { name: trait.trait_type, values: [trait.trait_value] } as unknown as NftAssetTraitInput
-            })
+            return { name: trait.trait_type, values: [trait.trait_value] } as unknown as NftAssetTraitInput
+          })
           : undefined,
     },
     first: ASSET_PAGE_SIZE,
@@ -319,8 +319,8 @@ export const CollectionNfts = ({ contractAddress, collectionStats, rarityVerifie
 
       return assetInBag
         ? itemsInBag
-            .filter((item) => isInSameMarketplaceCollection(asset, item.asset))
-            .findIndex((item) => item.asset.tokenId === asset.tokenId)
+          .filter((item) => isInSameMarketplaceCollection(asset, item.asset))
+          .findIndex((item) => item.asset.tokenId === asset.tokenId)
         : itemsInBag.filter((item) => isInSameMarketplaceCollection(asset, item.asset)).length
     },
     [itemsInBag]
@@ -505,8 +505,8 @@ export const CollectionNfts = ({ contractAddress, collectionStats, rarityVerifie
           <ActionsSubContainer>
             <TraceEvent
               events={[BrowserEvent.onClick]}
-              element={ElementName.NFT_FILTER_BUTTON}
-              name={EventName.NFT_FILTER_OPENED}
+              element={InterfaceElementName.NFT_FILTER_BUTTON}
+              name={NFTEventName.NFT_FILTER_OPENED}
               shouldLogImpression={!isFiltersExpanded}
               properties={{ collection_address: contractAddress, chain_id: chainId }}
             >

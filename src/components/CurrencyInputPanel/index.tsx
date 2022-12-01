@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { TraceEvent } from '@uniswap/analytics'
-import { BrowserEvent, ElementName, EventName } from '@uniswap/analytics-events'
+import { BrowserEvent, InterfaceElementName, SwapEventName } from '@uniswap/analytics-events'
 import { Currency, CurrencyAmount, Percent, Token } from '@uniswap/sdk-core'
 import { Pair } from '@uniswap/v2-sdk'
 import { useWeb3React } from '@web3-react/core'
@@ -63,7 +63,7 @@ const Container = styled.div<{ hideInput: boolean; disabled: boolean }>`
   `}
 `
 
-const CurrencySelect = styled(ButtonGray)<{
+const CurrencySelect = styled(ButtonGray) <{
   visible: boolean
   selected: boolean
   hideInput?: boolean
@@ -90,7 +90,7 @@ const CurrencySelect = styled(ButtonGray)<{
   :focus,
   :hover {
     background-color: ${({ selected, theme }) =>
-      selected ? theme.deprecated_bg3 : darken(0.05, theme.deprecated_primary1)};
+    selected ? theme.deprecated_bg3 : darken(0.05, theme.deprecated_primary1)};
   }
   visibility: ${({ visible }) => (visible ? 'visible' : 'hidden')};
 `
@@ -128,7 +128,7 @@ const Aligner = styled.span`
   width: 100%;
 `
 
-const StyledDropDown = styled(DropDown)<{ selected: boolean }>`
+const StyledDropDown = styled(DropDown) <{ selected: boolean }>`
   margin: 0 0.25rem 0 0.35rem;
   height: 35%;
 
@@ -166,7 +166,7 @@ const StyledBalanceMax = styled.button<{ disabled?: boolean }>`
   }
 `
 
-const StyledNumericalInput = styled(NumericalInput)<{ $loading: boolean }>`
+const StyledNumericalInput = styled(NumericalInput) <{ $loading: boolean }>`
   ${loadingOpacityMixin};
   text-align: left;
 `
@@ -280,8 +280,8 @@ export default function CurrencyInputPanel({
                   <StyledTokenName className="token-symbol-container" active={Boolean(currency && currency.symbol)}>
                     {(currency && currency.symbol && currency.symbol.length > 20
                       ? currency.symbol.slice(0, 4) +
-                        '...' +
-                        currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
+                      '...' +
+                      currency.symbol.slice(currency.symbol.length - 5, currency.symbol.length)
                       : currency?.symbol) || <Trans>Select a token</Trans>}
                   </StyledTokenName>
                 )}
@@ -316,8 +316,8 @@ export default function CurrencyInputPanel({
                   {showMaxButton && selectedCurrencyBalance ? (
                     <TraceEvent
                       events={[BrowserEvent.onClick]}
-                      name={EventName.SWAP_MAX_TOKEN_AMOUNT_SELECTED}
-                      element={ElementName.MAX_TOKEN_AMOUNT_BUTTON}
+                      name={SwapEventName.SWAP_MAX_TOKEN_AMOUNT_SELECTED}
+                      element={InterfaceElementName.MAX_TOKEN_AMOUNT_BUTTON}
                     >
                       <StyledBalanceMax onClick={onMax}>
                         <Trans>MAX</Trans>

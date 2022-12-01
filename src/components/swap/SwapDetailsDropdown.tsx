@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { TraceEvent } from '@uniswap/analytics'
-import { BrowserEvent, ElementName, EventName } from '@uniswap/analytics-events'
+import { BrowserEvent, InterfaceElementName, SwapEventName } from '@uniswap/analytics-events'
 import { Currency, Percent, TradeType } from '@uniswap/sdk-core'
 import { useWeb3React } from '@web3-react/core'
 import AnimatedDropdown from 'components/AnimatedDropdown'
@@ -43,13 +43,13 @@ const StyledCard = styled(OutlineCard)`
   border: 1px solid ${({ theme }) => theme.backgroundOutline};
 `
 
-const StyledHeaderRow = styled(RowBetween)<{ disabled: boolean; open: boolean }>`
+const StyledHeaderRow = styled(RowBetween) <{ disabled: boolean; open: boolean }>`
   padding: 0;
   align-items: center;
   cursor: ${({ disabled }) => (disabled ? 'initial' : 'pointer')};
 `
 
-const RotatingArrow = styled(ChevronDown)<{ open?: boolean }>`
+const RotatingArrow = styled(ChevronDown) <{ open?: boolean }>`
   transform: ${({ open }) => (open ? 'rotate(180deg)' : 'none')};
   transition: transform 0.1s linear;
 `
@@ -132,8 +132,8 @@ export default function SwapDetailsDropdown({
       <AutoColumn gap="8px" style={{ width: '100%', marginBottom: '-8px' }}>
         <TraceEvent
           events={[BrowserEvent.onClick]}
-          name={EventName.SWAP_DETAILS_EXPANDED}
-          element={ElementName.SWAP_DETAILS_DROPDOWN}
+          name={SwapEventName.SWAP_DETAILS_EXPANDED}
+          element={InterfaceElementName.SWAP_DETAILS_DROPDOWN}
           shouldLogImpression={!showDetails}
         >
           <StyledHeaderRow onClick={() => setShowDetails(!showDetails)} disabled={!trade} open={showDetails}>
@@ -183,9 +183,9 @@ export default function SwapDetailsDropdown({
             </RowFixed>
             <RowFixed>
               {!trade?.gasUseEstimateUSD ||
-              showDetails ||
-              !chainId ||
-              !SUPPORTED_GAS_ESTIMATE_CHAIN_IDS.includes(chainId) ? null : (
+                showDetails ||
+                !chainId ||
+                !SUPPORTED_GAS_ESTIMATE_CHAIN_IDS.includes(chainId) ? null : (
                 <GasEstimateBadge
                   trade={trade}
                   loading={syncing || loading}

@@ -1,5 +1,10 @@
 import { sendAnalyticsEvent, useTrace } from '@uniswap/analytics'
-import { InterfaceEventName, InterfaceSectionName, SwapEventName, SwapPriceUpdateUserResponse } from '@uniswap/analytics-events'
+import {
+  InterfaceEventName,
+  InterfaceSectionName,
+  SwapEventName,
+  SwapPriceUpdateUserResponse,
+} from '@uniswap/analytics-events'
 import { Trade } from '@uniswap/router-sdk'
 import { Currency, TradeType } from '@uniswap/sdk-core'
 import {

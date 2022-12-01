@@ -1,6 +1,6 @@
 import { Trans } from '@lingui/macro'
 import { useTrace } from '@uniswap/analytics'
-import { NavBarSearchTypes, InterfaceSectionName } from '@uniswap/analytics-events'
+import { InterfaceSectionName, NavBarSearchTypes } from '@uniswap/analytics-events'
 import { NftVariant, useNftFlag } from 'featureFlags/flags/nft'
 import { useIsNftPage } from 'hooks/useIsNftPage'
 import { Box } from 'nft/components/Box'

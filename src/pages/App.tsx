@@ -1,5 +1,5 @@
 import { initializeAnalytics, OriginApplication, sendAnalyticsEvent, Trace, user } from '@uniswap/analytics'
-import { CustomUserProperties, InterfaceEventName, getBrowser, InterfacePageName, BasicEventName } from '@uniswap/analytics-events'
+import { BasicEventName, CustomUserProperties, getBrowser, InterfacePageName } from '@uniswap/analytics-events'
 import Loader from 'components/Loader'
 import TopLevelModals from 'components/TopLevelModals'
 import { useFeatureFlagsIsLoaded } from 'featureFlags'

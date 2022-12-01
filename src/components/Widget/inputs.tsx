@@ -1,5 +1,5 @@
 import { sendAnalyticsEvent, useTrace } from '@uniswap/analytics'
-import { SwapEventName, InterfaceSectionName } from '@uniswap/analytics-events'
+import { InterfaceSectionName, SwapEventName } from '@uniswap/analytics-events'
 import { Currency, Field, SwapController, SwapEventHandlers, TradeType } from '@uniswap/widgets'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
 import { useCallback, useEffect, useMemo, useState } from 'react'

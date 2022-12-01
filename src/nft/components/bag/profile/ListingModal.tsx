@@ -1,6 +1,6 @@
 import { addressesByNetwork, SupportedChainId } from '@looksrare/sdk'
 import { sendAnalyticsEvent, Trace, useTrace } from '@uniswap/analytics'
-import { NFTEventName, InterfaceModalName } from '@uniswap/analytics-events'
+import { InterfaceModalName, NFTEventName } from '@uniswap/analytics-events'
 import { useWeb3React } from '@web3-react/core'
 import { Box } from 'nft/components/Box'
 import { Column, Row } from 'nft/components/Flex'

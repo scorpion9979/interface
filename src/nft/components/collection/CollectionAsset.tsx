@@ -1,7 +1,7 @@
 import { BigNumber } from '@ethersproject/bignumber'
 import { Trans } from '@lingui/macro'
 import { sendAnalyticsEvent, useTrace } from '@uniswap/analytics'
-import { NFTEventName, InterfacePageName } from '@uniswap/analytics-events'
+import { InterfacePageName, NFTEventName } from '@uniswap/analytics-events'
 import Tooltip from 'components/Tooltip'
 import { Box } from 'nft/components/Box'
 import { bodySmall } from 'nft/css/common.css'

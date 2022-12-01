@@ -1,5 +1,5 @@
 import { sendAnalyticsEvent, useTrace } from '@uniswap/analytics'
-import { NFTEventName, InterfacePageName } from '@uniswap/analytics-events'
+import { InterfacePageName, NFTEventName } from '@uniswap/analytics-events'
 import { ChainId } from '@uniswap/smart-order-router'
 import { MouseoverTooltip } from 'components/Tooltip'
 import { Box } from 'nft/components/Box'
